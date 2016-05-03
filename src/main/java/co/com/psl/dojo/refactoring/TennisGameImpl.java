@@ -2,76 +2,36 @@ package co.com.psl.dojo.refactoring;
 
 public class TennisGameImpl implements TennisGame {
     
-    private int m_score1 = 0;
-    private int m_score2 = 0;
-    private String player1Name;
-    private String player2Name;
+    private int p2;
+    private int p1;
+    private String p1N;
+    private String p2N;
 
-    public TennisGameImpl(String player1Name, String player2Name) {
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
-    }
-
-    public void wonPoint(String playerName) {
-        if (playerName == "player1")
-            m_score1 += 1;
-        else
-            m_score2 += 1;
+    public TennisGameImpl(String p1N, String p2N) {
+        this.p1N = p1N;
+        this.p2N = p2N;
     }
 
     public String getScore() {
-        String score = "";
-        int tempScore=0;
-        if (m_score1==m_score2)
-        {
-            switch (m_score1)
-            {
-                case 0:
-                        score = "Love-All";
-                    break;
-                case 1:
-                        score = "Fifteen-All";
-                    break;
-                case 2:
-                        score = "Thirty-All";
-                    break;
-                default:
-                        score = "Deuce";
-                    break;
-                
-            }
+        String s;
+        if (p1 < 4 && p2 < 4 && !(p1 + p2 == 6)) {
+            String[] p = new String[]{"Love", "Fifteen", "Thirty", "Forty"}; 
+            s = p[p1];
+            return (p1 == p2) ? s + "-All" : s + "-" + p[p2];
+        } else {
+            if (p1 == p2)
+                return "Deuce";
+            s = p1 > p2 ? p1N : p2N;
+            return ((p1-p2)*(p1-p2) == 1) ? "Advantage " + s : "Win for " + s;
         }
-        else if (m_score1>=4 || m_score2>=4)
-        {
-            int minusResult = m_score1-m_score2;
-            if (minusResult==1) score ="Advantage player1";
-            else if (minusResult ==-1) score ="Advantage player2";
-            else if (minusResult>=2) score = "Win for player1";
-            else score ="Win for player2";
-        }
-        else
-        {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = m_score1;
-                else { score+="-"; tempScore = m_score2;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score+="Love";
-                        break;
-                    case 1:
-                        score+="Fifteen";
-                        break;
-                    case 2:
-                        score+="Thirty";
-                        break;
-                    case 3:
-                        score+="Forty";
-                        break;
-                }
-            }
-        }
-        return score;
     }
+    
+    public void wonPoint(String playerName) {
+        if (playerName == "player1")
+            this.p1 += 1;
+        else
+            this.p2 += 1;
+        
+    }
+
 }
