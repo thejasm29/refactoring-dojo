@@ -1,13 +1,16 @@
-import static org.junit.Assert.*;
+package co.com.psl.dojo.test.refactoring;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+
+import co.com.psl.dojo.refactoring.TennisGame;
+import co.com.psl.dojo.refactoring.TennisGameImpl;
 
 @RunWith(Parameterized.class)
 public class TennisTest {
@@ -66,33 +69,21 @@ public class TennisTest {
         });
     }
 
-    public void checkAllScores(TennisGame game) {
+    @Test
+    public void checkAllScores() {
+        TennisGame game = new TennisGameImpl("player1", "player2");
         int highestScore = Math.max(this.player1Score, this.player2Score);
+        
         for (int i = 0; i < highestScore; i++) {
-            if (i < this.player1Score)
+            if (i < this.player1Score) {
                 game.wonPoint("player1");
-            if (i < this.player2Score)
+            }
+            
+            if (i < this.player2Score) {
                 game.wonPoint("player2");
+            }
         }
+        
         assertEquals(this.expectedScore, game.getScore());
     }
-
-    @Test
-    public void checkAllScoresTennisGame1() {
-        TennisGame1 game = new TennisGame1("player1", "player2");
-        checkAllScores(game);
-    }
-
-    @Test
-    public void checkAllScoresTennisGame2() {
-        TennisGame2 game = new TennisGame2("player1", "player2");
-        checkAllScores(game);
-    }
-
-    @Test
-    public void checkAllScoresTennisGame3() {
-        TennisGame3 game = new TennisGame3("player1", "player2");
-        checkAllScores(game);
-    }
-
 }
