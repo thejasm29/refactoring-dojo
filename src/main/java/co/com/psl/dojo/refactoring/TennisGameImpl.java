@@ -4,6 +4,8 @@ public class TennisGameImpl implements TennisGame
 {
     public int P1point = 0;
     public int P2point = 0;
+	
+	public int unused;
     
     public String P1res = "";
     public String P2res = "";
